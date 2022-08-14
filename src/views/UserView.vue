@@ -5,7 +5,7 @@
                 <el-input v-model="selectData.role" placeholder="请输入姓名" />
             </el-form-item>
             <el-form-item label="角色·">
-                <el-select v-model="formInline.region" placeholder="Activity zone">
+                <el-select v-model="value" placeholder="Activity zone">
                     <el-option label="Zone one" value="shanghai" />
                     <el-option label="Zone two" value="beijing" />
                 </el-select>
