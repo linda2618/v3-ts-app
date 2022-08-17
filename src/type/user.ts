@@ -4,13 +4,20 @@ interface roleInt {
 }
 export interface ListInt {
   id: number;
-  nickName: string;
+  nikeName: string;
   userName: string;
   role: roleInt[];
 }
 
+export interface ActiveInt {
+  id: number;
+  nikeName: string;
+  userName: string;
+  role: number[];
+}
+
 interface SelectDataInt {
-  nickName: string;
+  nikeName: string;
   role: number;
 }
 interface RoleListInt {
@@ -21,9 +28,18 @@ interface RoleListInt {
 
 export class InitDta {
   selectData: SelectDataInt = {
-    nickName: "",
+    nikeName: "",
     role: 0,
   };
   list: [ListInt][] = [];
+
+  listData: [ListInt][] = [];
   roleList: RoleListInt[] = [];
+  active: ActiveInt = {
+    id: 0,
+    nikeName: "",
+    userName: "",
+    role: [],
+  };
+  isShow: boolean = false;
 }
