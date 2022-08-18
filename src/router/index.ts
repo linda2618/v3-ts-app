@@ -21,11 +21,29 @@ const routes: Array<RouteRecordRaw> = [
         path: "userList",
         name: "userList",
         meta: {
-          isShow: true,
+          isShow: false,
           title: "用户列表",
         },
         component: () =>
           import(/* webpackChunkName: "userlist" */ "../views/UserView.vue"),
+      },
+      {
+        path: "/roleList",
+        name: "roleList",
+        meta: {
+          isShow: true,
+          title: "角色列表",
+        },
+        component: () => import("../views/RoleView.vue"),
+      },
+      {
+        path: "/authority",
+        name: "authority",
+        meta: {
+          isShow: true,
+          title: "权限列表",
+        },
+        component: () => import("../views/Authority.vue"),
       },
     ],
   },

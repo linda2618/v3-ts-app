@@ -48,7 +48,7 @@
         </el-form>
         <template #footer>
             <span class="dialog-footer">
-                <el-button @click="dialogFormVisible = false">取消</el-button>
+                <el-button @click="isShow = false">取消</el-button>
                 <el-button type="primary" @click="userChange">确认</el-button>
             </span>
         </template>
@@ -101,7 +101,7 @@ const editForm = (row: ListInt) => {
 const userChange = () => {
     const obj: any = list.value.find((v: any) => v.id === active.value.id)
     obj.nikeName = active.value.nikeName
-    obj.role = roleList.value.filter((v: any) => active.value.role.indexOf(v.roleId !== -1))
+    obj.role = roleList.value.filter((v: any) => active.value.role.indexOf(v.roleId) !== -1)
     isShow.value = false
 }
 

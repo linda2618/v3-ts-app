@@ -11,3 +11,5 @@ export const getList = (data: any) =>
   $http({ url: "/getList", method: "get", data });
 export const getRoleList = () => $http({ url: "/getRoleList", method: "get" });
 export const getUserList = () => $http({ url: "/getUserList", method: "get" });
+export const getAuthority = () =>
+  $http({ url: "/getAuthority", method: "get" });
