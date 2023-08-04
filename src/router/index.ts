@@ -21,44 +21,44 @@ const routes: Array<RouteRecordRaw> = [
         component: () =>
           import(/* webpackChunkName: "order" */ "../views/Redirect.vue"),
       },
-      {
-        path: "order",
-        name: "order",
-        meta: {
-          isShow: true,
-          title: "订单列表",
-        },
-        component: () =>
-          import(/* webpackChunkName: "order" */ "../views/OrderView.vue"),
-      },
-      {
-        path: "userList",
-        name: "userList",
-        meta: {
-          isShow: true,
-          title: "用户列表",
-        },
-        component: () =>
-          import(/* webpackChunkName: "userlist" */ "../views/UserView.vue"),
-      },
-      {
-        path: "/roleList",
-        name: "roleList",
-        meta: {
-          isShow: true,
-          title: "角色列表",
-        },
-        component: () => import("../views/RoleView.vue"),
-      },
-      {
-        path: "/authority",
-        name: "authority",
-        meta: {
-          isShow: false,
-          title: "权限列表",
-        },
-        component: () => import("../views/Authority.vue"),
-      },
+      // {
+      //   path: "order",
+      //   name: "order",
+      //   meta: {
+      //     isShow: true,
+      //     title: "订单列表",
+      //   },
+      //   component: () =>
+      //     import(/* webpackChunkName: "order" */ "../views/OrderView.vue"),
+      // },
+      // {
+      //   path: "userList",
+      //   name: "userList",
+      //   meta: {
+      //     isShow: true,
+      //     title: "用户列表",
+      //   },
+      //   component: () =>
+      //     import(/* webpackChunkName: "userlist" */ "../views/UserView.vue"),
+      // },
+      // {
+      //   path: "/roleList",
+      //   name: "roleList",
+      //   meta: {
+      //     isShow: true,
+      //     title: "角色列表",
+      //   },
+      //   component: () => import("../views/RoleView.vue"),
+      // },
+      // {
+      //   path: "/authority",
+      //   name: "authority",
+      //   meta: {
+      //     isShow: false,
+      //     title: "权限列表",
+      //   },
+      //   component: () => import("../views/AuthorityView.vue"),
+      // },
     ],
   },
   {
@@ -94,37 +94,38 @@ router.beforeEach(async (to) => {
     return "/login";
   }
 
-  // //动态添加；路由
-  // else if (to.path !== "/login" && token) {
-  //   if (router.getRoutes().length === 4) {
-  //     console.log('111', router.getRoutes())
-  //     //动态添加路由
-  //       // 2.2 从服务器获取动态路由数据
-  //     let routerData: any = await getRouter();
-  //     routerData = routerData.data;
-  //     // console.log(routerData.data);
+  //动态添加；路由
+  else if (to.path !== "/login" && token) {
+    // console.log(11,to.path)
+    if (router.getRoutes().length === 4) {
+      // console.log('111', router.getRoutes())
+      
+        // 2.2 从服务器获取动态路由数据
+      let routerData: any = await getRouter();
+      routerData = routerData.data.data;
+      // console.log(routerData);
 
-  //     //  2.3 遍历动态路由数据，将其添加为新的路由配置
-  //     routerData.forEach((v: any) => {
-  //       const routerObj: RouteRecordRaw = {
-  //         path: v.name,
-  //         name: v.name,
-  //         meta: v.meta,
-  //         component: () =>
-  //           import(
-  //             /* webpackChunkName: "[request]" */ `../views/${v.path}View.vue`
-  //           ),
-  //       };
-  //       router.addRoute("home", routerObj);
-  //     });
-  //     // 2.4 添加完成后，通过 replace 方法进行重定向，防止动态添加的路由无效。
-  //     router.replace(to.path);
+      //  2.3 遍历动态路由数据，将其添加为新的路由配置
+      routerData.forEach((v: any) => {
+        const routerObj: RouteRecordRaw = {
+          path: v.name,
+          name: v.name,
+          meta: v.meta,
+          component: () =>
+            import(
+              /* webpackChunkName: "[request]" */ `../views${v.path}.vue`
+            ),
+        };
+        router.addRoute("home", routerObj);
+      });
+      // 2.4 添加完成后，通过 replace 方法进行重定向，防止动态添加的路由无效。
+      router.replace(to.path);
 
-  //   } 
+    } 
     else if (to.path === "/login" && token) {
       return "/";
     }
-  // }
+  }
 });
 
 export default router;

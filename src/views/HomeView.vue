@@ -14,6 +14,8 @@
             <el-button @click="goBack" class="btn-text" type="primary" link >
               退出
             </el-button>
+            
+          <!-- <el-button @click="getRouterBtn">点击</el-button> -->
           </el-col>
         </el-row>
       </el-header>
@@ -44,6 +46,8 @@
 <script lang="ts" setup>
 import { useRouter, useRoute } from 'vue-router'
 import { ElMessage, ElMessageBox } from 'element-plus'
+// import { getRouter } from '../http/api'
+
 
 const router = useRouter()
 const route = useRoute()
@@ -61,6 +65,13 @@ const goBack = () => {
             })
 
 }
+// const getRouterBtn = async() => {
+//   console.log('点击了')
+//   let routerData: any = await getRouter();
+//   console.log(routerData)
+//       routerData = routerData.data;
+//       console.log(routerData.data);
+// }
 
 
 </script>
