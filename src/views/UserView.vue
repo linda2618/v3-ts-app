@@ -13,6 +13,7 @@
             </el-form-item>
             <el-form-item>
                 <el-button type="primary" @click="onSubmit">查询</el-button>
+                <el-button type="primary" @click="back">返回</el-button>
             </el-form-item>
         </el-form>
         <el-table border :data="list" stripe style="width: 100%">
@@ -59,23 +60,34 @@
 import { onMounted, reactive, toRefs } from 'vue'
 import { InitDta, ListInt } from '../type/user'
 import { getRoleList, getUserList } from '../http/api'
+import { ElMessage} from 'element-plus'
+import router from '@/router'
+
 
 let { selectData, list, roleList, listData, active, isShow } = toRefs(reactive(new InitDta()))
 // 获取数据
 onMounted(() => {
+    getUserInfo()
+    getRoleInfo()
+})
+const getUserInfo = () => {
     getUserList().then((res) => {
         list.value = res.data.data
         listData.value = res.data.data
 
     })
+}
+
+const getRoleInfo =() => {
     getRoleList().then((res) => {
         roleList.value = res.data.data
     })
 
-})
-
-const onSubmit = () => {
+}
+    
+const selectFun = () => {
     let arr: [ListInt][] = []
+    console.log('点击率')
     if (selectData.value.nikeName || selectData.value.role) {
         if (selectData.value.nikeName) {
             arr = listData.value.filter((v: any) => v.nikeName.indexOf(selectData.value.nikeName) != -1)
@@ -83,11 +95,19 @@ const onSubmit = () => {
         if (selectData.value.role) {
             arr = (selectData.value.nikeName ? arr : list.value).filter((v: any) => v.role.find((i: any) => i.role === selectData.value.role))
         }
-    } else {
-        arr = listData.value
+    }
+    else { 
+        ElMessage({
+            type: 'error',
+            message: `请输入查询内容`,})
     }
     list.value = arr
 }
+
+const onSubmit = () => {
+    selectFun()
+} 
+
 
 const editForm = (row: ListInt) => {
     active.value = {
@@ -105,6 +125,9 @@ const userChange = () => {
     isShow.value = false
 }
 
+const back = () => {
+    getUserInfo()
+}
 </script>
 
 <style scoped lang="less">

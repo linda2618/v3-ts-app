@@ -1,10 +1,12 @@
 <template>
     <div>
-        <el-button @click="onSubmit" link type="primary" size="small">
+        <h3>权限修改</h3>
+        <el-divider></el-divider>
+        <el-button @click="onSubmit" type="primary">
             确认修改
         </el-button>
-        <el-tree ref="treeRef" :data="list" :check-strictly="true" show-checkbox node-key="roleId"
-            :default-checkout-keys="authorityIds" :props="{
+        <el-tree ref="treeRef" :data="data.list" :check-strictly="true" show-checkbox node-key="roleId"
+            :default-checkout-keys="data.authorityIds" :props="{
                 children: 'roleList',
                 label: 'name'
             }" />
@@ -20,18 +22,19 @@ import { geTauthority } from '../http/api'
 const route = useRoute()
 const query: any = route.query
 
-const { list, treeRef, authorityIds } = toRefs(reactive(new InitData(query.id, query.authority)))
-// console.log(authorityIds);
-// console.log(authorityIds.value);
+const data = reactive(new InitData(query.id, query.authority))
+// console.log('data',data)
 
 onMounted(() => {
     geTauthority().then(res => {
-        list.value = res.data.data
+        data.list = res.data.data
     })
 })
 
 const onSubmit = () => {
     alert('http 提交')
+    console.log(data.treeRef.getCheckedKeys())
+
 }
 
 

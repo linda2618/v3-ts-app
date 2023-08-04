@@ -67,7 +67,7 @@ const resetForm = () => {
 .login-box {
     width: 100%;
     height: 100%;
-    background: url('../assets/city.jpg') no-repeat;
+    background: url('../assets/girl.jpg') no-repeat;
     background-size: 100% 100%;
 
     .ruleForm {

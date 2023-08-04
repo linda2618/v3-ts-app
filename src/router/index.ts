@@ -1,5 +1,7 @@
 import { createRouter, createWebHashHistory, RouteRecordRaw } from "vue-router";
 import HomeView from "../views/HomeView.vue";
+import { ElMessage} from 'element-plus'
+
 import { getRouter } from "../http/api";
 
 const routes: Array<RouteRecordRaw> = [
@@ -7,8 +9,18 @@ const routes: Array<RouteRecordRaw> = [
     path: "/",
     name: "home",
     component: HomeView,
-    redirect: "order",
+    redirect: "white",
     children: [
+      {
+        path: "white",
+        name: "white", 
+         meta: {
+          isShow: true,
+          title: "首页",
+        },
+        component: () =>
+          import(/* webpackChunkName: "order" */ "../views/Redirect.vue"),
+      },
       {
         path: "order",
         name: "order",
@@ -23,7 +35,7 @@ const routes: Array<RouteRecordRaw> = [
         path: "userList",
         name: "userList",
         meta: {
-          isShow: false,
+          isShow: true,
           title: "用户列表",
         },
         component: () =>
@@ -75,15 +87,24 @@ const router = createRouter({
 router.beforeEach(async (to) => {
   const token: string | null = sessionStorage.getItem("token");
   if (!token && to.path !== "/login") {
+      ElMessage({
+        type: 'error',
+        message: `请先登录`,
+      })
     return "/login";
   }
+
+  // //动态添加；路由
   // else if (to.path !== "/login" && token) {
-  //   if (router.getRoutes().length === 3) {
+  //   if (router.getRoutes().length === 4) {
+  //     console.log('111', router.getRoutes())
   //     //动态添加路由
+  //       // 2.2 从服务器获取动态路由数据
   //     let routerData: any = await getRouter();
   //     routerData = routerData.data;
   //     // console.log(routerData.data);
 
+  //     //  2.3 遍历动态路由数据，将其添加为新的路由配置
   //     routerData.forEach((v: any) => {
   //       const routerObj: RouteRecordRaw = {
   //         path: v.name,
@@ -91,15 +112,18 @@ router.beforeEach(async (to) => {
   //         meta: v.meta,
   //         component: () =>
   //           import(
-  //             /* webpackChunkName: "[request]" */ `../views/${v.path}.vue`
+  //             /* webpackChunkName: "[request]" */ `../views/${v.path}View.vue`
   //           ),
   //       };
   //       router.addRoute("home", routerObj);
   //     });
+  //     // 2.4 添加完成后，通过 replace 方法进行重定向，防止动态添加的路由无效。
   //     router.replace(to.path);
-  //   } else if (to.path === "/login" && token) {
-  //     return "/";
-  //   }
+
+  //   } 
+    else if (to.path === "/login" && token) {
+      return "/";
+    }
   // }
 });
 
